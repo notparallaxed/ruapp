@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lotação do RU UFABC</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <style>
+        @-ms-viewport { width: 100vw ; zoom: 100% ; }  @viewport { width: 100vw ; zoom: 100% ; }
+        @-ms-viewport { user-zoom: fixed ; }           @viewport { user-zoom: fixed ; }
+    </style>
+    <link href="style.css" type="text/css" rel="stylesheet">
+    <script src="cordova.js"></script>       <!-- phantom library, needed for Cordova api calls, added during build -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/pdf.js"></script>
+    <script src="js/app.js"></script>           <!-- recommended location of your JavaScript code relative to other JS files -->
+    <script src="xdk/init-dev.js"></script>     <!-- normalizes device and document ready events, see README for details -->
+</head>
+
+<body>
+    <div id="toolbar"><h1>RU UFABC</h1></div>
+    <div id="container">
+        <!-- Ru Santo Andréo -->
+        <div class="card" id="sa">
+          <img src="img/ru_sbc_wide.jpg">
+          <div class="info">
+            <h1>Santo André</h1>
+            <ul>
+              <li><img src="img/lot-icon.jpg" class="icon">LOTAÇÃO <span id="lot_sa"></span></li>
+              <li><img src="img/bad-icon.jpg" class="icon">PIOR HORÁRIO <span id="best_sa"></span></li>
+              <li><img src="img/good-icon.jpg" class="icon">HORÁRIO <span id="worst_sa"></span></li>
+            </ul>
+          </div>
+        </div>
+        <!-- Ru São Bernardo -->
+        <div class="card" id="sbc">
+          <img src="img/ru_sbc_wide.jpg">
+          <div class="info">
+            <h1>São Bernardo</h1>
+            <ul>
+              <li><img src="img/lot-icon.jpg" class="icon">LOTAÇÃO<br> <span id="lot_sbc"></span></li>
+              <li><img src="img/bad-icon.jpg" class="icon">PIOR HORÁRIO<br> <span id="best_sbc"></span></li>
+              <li><img src="img/good-icon.jpg" class="icon">HORÁRIO<br> <span id="worst_sbc"></span></li>
+            </ul>
+          </div>
+        </div>
+        <br clear="both">
+        <div id="cardapio">
+          <div id="cardapioCtl"><button id="btnVoltarDia" class="btnFoward"></button><h1>CARDÁPIO<br><span id="txtDia"></span></h1><button id="btnNextDia" class="btnNext"></button></div>
+          <h1 hidden>Domingo não tem RU neh ;)</h1>
+         <ul>
+            <li><img src="img/prato-principal.jpg"><span id="principal"></span></li>
+            <li><img src="img/prato-principal.jpg"> <span id="principalJantar"></span></li>
+            <li><img src="img/prato-principal-veg.jpg"><span id="vegetariano"></span></li>
+          </ul>
+        </div>
+    </div>
+</body>
+</html>
