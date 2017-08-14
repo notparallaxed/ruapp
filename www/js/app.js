@@ -106,6 +106,9 @@ function loadCardapio(day=null){
     if(today.getDay() == 0){
         $("#cardapio ul").hide();
         $("#cardapio > h1").show();
+    }else{
+        $("#cardapio ul").show();
+        $("#cardapio > h1").hide();
     }
        Cardapio.forEach(function(value,index){
           if(value.dia == today.getDate()){
@@ -154,18 +157,46 @@ $(document).ready(function(){
        extractPDF();
    }
 
+   /* =-=- evnt bntVoltarDia -=-= */
    $("#btnVoltarDia").click(function(evt){
-      if(today.getDay() == 0 && cardweekday == -6){
+      var now = new Date();
+      if(now.getDay() == 0 && cardweekday == -6){
           evt.currentTarget.disabled = true;
           return;
       }
-      if(today.getDay() != 0 && cardweekday == 0 ){
+      if(now.getDay() != 0 && cardweekday == 0 ){
           evt.currentTarget.disabled = true;
           return;
+      }
+      if($("#btnNextDia").prop('disabled')){
+          $("#btnNextDia").prop('disabled', false);
       }
 
        cardweekday--;
-       console.log(cardweekday);
+       today.setDate(today.getDate() + (cardweekday - today.getDay())); /* subtrai 1 dia do dia atual */
+
+       loadCardapio(today);
+   });
+
+   /* =-=- evnt bntNextDia -=-= */
+   $("#btnNextDia").click(function(evt){
+       var now = new Date();
+       if(now.getDay() == 0 && cardweekday == 0){
+           evt.currentTarget.disabled = true;
+           return;
+       }
+       if(now.getDay() != 0 && cardweekday == 6 ){
+           evt.currentTarget.disabled = true;
+           return;
+       }
+       if($("#btnVoltarDia").prop('disabled')){
+           $("#btnVoltarDia").prop('disabled', false);
+       }
+
+        cardweekday++;
+        today.setDate(today.getDate() + (cardweekday - today.getDay())); /* subtrai 1 dia do dia atual */
+
+        loadCardapio(today);
    });
 
 });
