@@ -5,7 +5,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "jsapp/template-blank-cordova-project-lite/sample.zip",
       "projectGuid": "c1956bda-7534-4b95-9d38-a866651e04b1",
-      "lastModifiedDate": 1502657882922,
+      "lastModifiedDate": 1502687024461,
       "creationDate": 1502093689662
     },
     "sourceDirectory": "www",
@@ -194,7 +194,7 @@
           "Fullscreen": false,
           "Orientation": "portrait"
         },
-        "isActive_": true,
+        "isActive_": false,
         "certificateId_": "",
         "cordovaCLIVersion_": "6.2.0",
         "crosswalkVersion_": "23",

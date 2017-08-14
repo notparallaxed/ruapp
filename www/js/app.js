@@ -17,17 +17,17 @@ function extractPDF(){
     PDFJS.getDocument("http://proap.ufabc.edu.br/images/PDF/Cardapio.pdf").then(function(pdf){
         pdf.getPage(1).then(function(page){
             page.getTextContent().then(function(content){
-                
+
                 pdfContent = "";
-                
+
                 content.items.forEach(function(value){
                     pdfContent += value.str;
                 });
-                
+
                 pdfContent = pdfContent.split(" ");
-                
+
                 /* rearranjo da tabela em array */
-                
+
                 pdfContent.forEach(function(value, index){
                    if(value == "SAB"){
                        for (i=index + 1, k= 0; pdfContent[i] != "Carne"; i++, k++){
@@ -43,7 +43,7 @@ function extractPDF(){
                                if (day != -1){
                                 Cardapio[day].carne = Cardapio[day].carne.trim();
                                }
-                               day++; 
+                               day++;
                            }
                            Cardapio[day].carne += pdfContent[i] + " ";
                         }
@@ -51,12 +51,12 @@ function extractPDF(){
                     if(value == "(Jantar)"){
                         var regular = new RegExp('[A-Z]');
                         var day = -1;
-                        for (i=index + 1; pdfContent[i+1] != "---------"; i++){
+                        for (i=index + 1; pdfContent[i+2] != "Opção"; i++){
                            if(regular.test(pdfContent[i])){
                                if (day != -1){
                                 Cardapio[day].jantar = Cardapio[day].jantar.trim();
                                }
-                               day++; 
+                               day++;
                            }
                            Cardapio[day].jantar += pdfContent[i] + " ";
                         }
@@ -69,27 +69,27 @@ function extractPDF(){
                                if (day != -1){
                                 Cardapio[day].veg = Cardapio[day].veg.trim();
                                }
-                               day++; 
+                               day++;
                            }
                            Cardapio[day].veg += pdfContent[i] + " ";
                         }
                     }
                 });
-                
+
                 localStorage.setItem("cardapio", JSON.stringify(Cardapio));
                 localStorage.setItem("lastUpdate", JSON.stringify(getMonday(new Date())));
-                
+
                 loadCardapio();
-                
-                
+
+
             }, function(){
-                navigator.notification.alert("Something wrong happen here :(");    
+                navigator.notification.alert("Something wrong happen here :(");
             });
-            
+
         }, function(){
             navigator.notification.alert("Something wrong happen here :(");
         });
-        
+
     }, function(){
         navigator.notification.alert("Something wrong happen here :(");
     });
@@ -100,9 +100,9 @@ function loadCardapio(day=null){
     if(day != null){
         today = day;
     }
-    
+
     $("#txtDia").html(today.getDate() + "/" + today.getMonth() + "(" + getWeekDayName(today.getDay()) + ")");
-    
+
     if(today.getDay() == 0){
         $("#cardapio ul").hide();
         $("#cardapio > h1").show();
@@ -112,14 +112,14 @@ function loadCardapio(day=null){
             $("#principal").html(value.carne);
             $("#principalJantar").html(value.jantar);
             $("#vegetariano").html(value.veg);
-          } 
+          }
        });
 }
 
 /* getMondayFunction */
 function getMonday(d){
     var atualday = d.getDay();
-    var monday = d.getDate() - atualday + (atualday == 0? -6:1);  
+    var monday = d.getDate() - atualday + (atualday == 0? -6:1);
     return monday;
 }
 
@@ -136,14 +136,16 @@ function getWeekDayName(w){
     }
 }
 
+/* =-=- WHEN DEVICE IS READY =-=-= */
+
 $(document).ready(function(){
-    
+
     Cardapio = JSON.parse(localStorage.getItem("cardapio"));
     lastUpdate = JSON.parse(localStorage.getItem("lastUpdate"));
-    
+
     today = new Date();
     cardweekday = today.getDay();
-    
+
    if(lastUpdate == getMonday(new Date())){
         loadCardapio();
    }else{
@@ -151,7 +153,7 @@ $(document).ready(function(){
        Cardapio = [];
        extractPDF();
    }
-    
+
    $("#btnVoltarDia").click(function(evt){
       if(today.getDay() == 0 && cardweekday == -6){
           evt.currentTarget.disabled = true;
@@ -161,13 +163,9 @@ $(document).ready(function(){
           evt.currentTarget.disabled = true;
           return;
       }
-       
+
        cardweekday--;
        console.log(cardweekday);
    });
-    
+
 });
-
-
-
-
